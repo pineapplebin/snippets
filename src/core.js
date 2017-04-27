@@ -170,3 +170,29 @@ Array.range = function (start_or_length, end, step) {
         array.push(i);
     return array;
 };
+
+/**
+ * 返回一个迭代器，迭代内容为指定范围的数组
+ * 惰性生成的内容
+ * Example::
+ *    for (let i of Array.xrange(10))
+ *        console.log(i)
+ *
+ * @param {Number} start_or_length 开始数字或总长度
+ * @param {Number} end 生成数组的边界（不包含）
+ * @param {Number} step 数字间的差值，默认为1
+ * @returns {Object} 可迭代的对象
+ */
+Array.xrange = function (start_or_length, end, step) {
+    let s = end ? start_or_length : 0;
+    let e = end ? end : start_or_length;
+    let st = step || 1;
+    return {
+        [Symbol.iterator]: function* () {
+            while (s < e) {
+                yield s;
+                s += st
+            }
+        }
+    }
+};
