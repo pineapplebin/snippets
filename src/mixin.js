@@ -54,19 +54,7 @@ const Person = BookCollector(class {
     }
 });
 
-function assert (expression, should) {
-    if (expression !== should)
-        throw new Error("expression's result not right")
-}
-const assertTrue = (expression) => assert(expression, true);
-
-const man = new Person('Ben', 'Cen');
-man.addToCollection('A');
-man.addToCollection('B');
-
-assertTrue(man.fullName() === 'Ben Cen');
-assertTrue(man instanceof BookCollector);
-assertTrue(man.collection().length === 2);
-assertTrue(man.collection()[0] === 'A');
-assertTrue(man.collection()[1] === 'B');
-
+module.exports = {
+    Person,
+    BookCollector
+};
