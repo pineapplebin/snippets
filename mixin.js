@@ -1,19 +1,22 @@
-'use strict'
+'use strict';
 
-function mixin(behaviour, shared_behaviour = {}) {
+function mixin (behaviour, shared_behaviour = {}) {
     const instance_keys = Reflect.ownKeys(behaviour);
     const shared_keys = Reflect.ownKeys(shared_behaviour);
     const type_tag = Symbol('isa');
 
-    function _mixin(target) {
+    function _mixin (clazz) {
         for (let property of instance_keys)
-            Object.defineProperty(target, property, { value: behaviour[property] });
-        Object.defineProperty(target, type_tag, { value: true });
-        return target;
+            Object.defineProperty(clazz.prototype, property, {
+                value: behaviour[property],
+                writable: true
+            });
+        Object.defineProperty(clazz.prototype, type_tag, { value: true });
+        return clazz;
     }
 
     for (let property of shared_keys)
-        Object.defineProperty(_mixin, property, { 
+        Object.defineProperty(_mixin, property, {
             value: shared_behaviour[property],
             enumerable: shared_behaviour.propertyIsEnumerable(property)
         });
@@ -26,7 +29,7 @@ function mixin(behaviour, shared_behaviour = {}) {
 
 /* eg. */
 const BookCollector = mixin({
-    addToCollection(name) { 
+    addToCollection(name) {
         this.collection().push(name);
         return this;
     },
@@ -35,8 +38,8 @@ const BookCollector = mixin({
     }
 });
 
-class Person {
-    constructor (first, last) { 
+const Person = BookCollector(class {
+    constructor (first, last) {
         this.rename(first, last);
     }
 
@@ -49,8 +52,7 @@ class Person {
         this.last_name = last;
         return this;
     }
-}
-BookCollector(Person.prototype);
+});
 
 function assert (expression, should) {
     if (expression !== should)
@@ -58,7 +60,7 @@ function assert (expression, should) {
 }
 const assertTrue = (expression) => assert(expression, true);
 
-const man = new Person('Ben', 'Cen')
+const man = new Person('Ben', 'Cen');
 man.addToCollection('A');
 man.addToCollection('B');
 
