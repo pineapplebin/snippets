@@ -39,4 +39,5 @@ jspm_packages
 # IDE
 .idea
 
-src/playground.js
+*/playground.js
+dist
