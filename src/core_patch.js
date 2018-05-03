@@ -4,10 +4,8 @@
 /* instance methods */
 /*=====================================*/
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 Object.prototype.hasProp = function (key) {
-    return this[key] !== undefined;
+  return this[key] !== undefined
 };
 
 /**
@@ -18,7 +16,7 @@ Object.prototype.hasProp = function (key) {
  * @returns {Number} 余数
  */
 Number.prototype.mod = function (n) {
-    return (this % n + n) % n;
+  return ((this % n) + n) % n;
 };
 
 /**
@@ -27,14 +25,10 @@ Number.prototype.mod = function (n) {
  * @param args 替换的内容
  * @returns {String} 格式化后的新字符串
  */
-String.prototype.format = function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-    }
-
-    return this.replace(/%([0-9]+)/g, function (s, n) {
-        return args[Number(n) - 1];
-    });
+String.prototype.format = function (...args) {
+  return this.replace(/%([0-9]+)/g, function (s, n) {
+    return args[Number(n) - 1];
+  });
 };
 
 /**
@@ -43,7 +37,7 @@ String.prototype.format = function () {
  * @returns {String} 首字母大写后的新字符串
  */
 String.prototype.title = function () {
-    return this[0].toUpperCase() + this.slice(1);
+  return this[0].toUpperCase() + this.slice(1);
 };
 
 /**
@@ -53,10 +47,10 @@ String.prototype.title = function () {
  * @returns {String} 以0补充长度的新字符串
  */
 String.prototype.padZero = function (length) {
-    var s = this;
-    while (s.length < length) {
-        s = '0' + s;
-    }return s;
+  let s = this;
+  while (s.length < length)
+    s = '0' + s;
+  return s;
 };
 
 /**
@@ -66,7 +60,7 @@ String.prototype.padZero = function (length) {
  * @returns {String} 以0补充长度的新字符串
  */
 Number.prototype.padZero = function (length) {
-    return String(this).padZero(length);
+  return String(this).padZero(length);
 };
 
 /**
@@ -76,15 +70,17 @@ Number.prototype.padZero = function (length) {
  * @returns {Boolean} 如果两个数组内容相同返回true
  */
 Array.prototype.equals = function (array) {
-    if (!array || this.length !== array.length) return false;
-    for (var i = 0; i < this.length; i++) {
-        if (this[i] instanceof Array && array[i] instanceof Array) {
-            if (!this[i].equals(array[i])) return false;
-        } else if (this[i] !== array[i]) {
-            return false;
-        }
+  if (!array || this.length !== array.length)
+    return false;
+  for (let i = 0; i < this.length; i++) {
+    if (this[i] instanceof Array && array[i] instanceof Array) {
+      if (!this[i].equals(array[i]))
+        return false;
+    } else if (this[i] !== array[i]) {
+      return false;
     }
-    return true;
+  }
+  return true;
 };
 
 /**
@@ -93,7 +89,7 @@ Array.prototype.equals = function (array) {
  * @returns {Array} 原数组的拷贝
  */
 Array.prototype.clone = function () {
-    return this.slice(0);
+  return this.slice(0);
 };
 
 /**
@@ -104,7 +100,7 @@ Array.prototype.clone = function () {
  * @returns {Boolean} 如果包含则返回true
  */
 Array.prototype.contains = function (element) {
-    return this.indexOf(element) >= 0;
+  return this.indexOf(element) >= 0;
 };
 
 /**
@@ -114,7 +110,7 @@ Array.prototype.contains = function (element) {
  * @returns {Boolean} 如果包含则返回true
  */
 String.prototype.contains = function (string) {
-    return this.indexOf(string) >= 0;
+  return this.indexOf(string) >= 0;
 };
 
 /**
@@ -124,8 +120,10 @@ String.prototype.contains = function (string) {
  * @returns {Array} 包含时间内容的数组
  */
 Date.prototype.toArray = function () {
-    var d = this;
-    return [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getTime(), d.getTimezoneOffset() / 60, d.getDay()];
+  let d = this;
+  return [d.getFullYear(), d.getMonth() + 1, d.getDate(),
+    d.getHours(), d.getMinutes(), d.getSeconds(),
+    d.getTime(), d.getTimezoneOffset() / 60, d.getDay()];
 };
 
 /*=====================================*/
@@ -138,7 +136,7 @@ Date.prototype.toArray = function () {
  * @param {Object} object 需要克隆的对象
  */
 JSON.clone = function (object) {
-    return JSON.parse(JSON.stringify(object));
+  return JSON.parse(JSON.stringify(object));
 };
 
 /**
@@ -148,7 +146,7 @@ JSON.clone = function (object) {
  * @returns {Number} 随机整数
  */
 Math.randomInt = function (max) {
-    return Math.floor(max * Math.random());
+  return Math.floor(max * Math.random());
 };
 
 /**
@@ -164,13 +162,13 @@ Math.randomInt = function (max) {
  * @returns {Array} 含有指定内容数字的数组
  */
 Array.range = function (start_or_length, end, step) {
-    var s = end ? start_or_length : 0;
-    var e = end ? end : start_or_length;
-    var st = step || 1;
-    var array = [];
-    for (var i = s; i < e; i += st) {
-        array.push(i);
-    }return array;
+  let s = end ? start_or_length : 0;
+  let e = end ? end : start_or_length;
+  let st = step || 1;
+  let array = [];
+  for (let i = s; i < e; i += st)
+    array.push(i);
+  return array;
 };
 
 /**
@@ -186,32 +184,15 @@ Array.range = function (start_or_length, end, step) {
  * @returns {Object} 可迭代的对象
  */
 Array.xrange = function (start_or_length, end, step) {
-    var s = end ? start_or_length : 0;
-    var e = end ? end : start_or_length;
-    var st = step || 1;
-    return _defineProperty({}, Symbol.iterator, regeneratorRuntime.mark(function _callee() {
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-            while (1) {
-                switch (_context.prev = _context.next) {
-                    case 0:
-                        if (!(s < e)) {
-                            _context.next = 6;
-                            break;
-                        }
-
-                        _context.next = 3;
-                        return s;
-
-                    case 3:
-                        s += st;
-                        _context.next = 0;
-                        break;
-
-                    case 6:
-                    case "end":
-                        return _context.stop();
-                }
-            }
-        }, _callee, this);
-    }));
+  let s = end ? start_or_length : 0;
+  let e = end ? end : start_or_length;
+  let st = step || 1;
+  return {
+    [Symbol.iterator]: function* () {
+      while (s < e) {
+        yield s;
+        s += st
+      }
+    }
+  }
 };
